@@ -8,6 +8,8 @@ import android.webkit.WebViewClient
 import androidx.core.content.ContextCompat.startActivity
 import android.content.Intent
 import android.graphics.Bitmap
+import android.util.Log
+import android.view.KeyEvent
 import android.view.View
 import to.dev.dev_android.databinding.ActivityMainBinding
 
@@ -18,7 +20,13 @@ class CustomWebViewClient(val context: Context, val binding: ActivityMainBinding
         super.onPageFinished(view, url)
     }
 
+    override fun shouldOverrideKeyEvent(view: WebView?, event: KeyEvent?): Boolean {
+        Log.d("CustomWebViewClient", "shouldOverrideKeyEvent (line 24): Key event: $event.keyCode" )
+        return super.shouldOverrideKeyEvent(view, event)
+    }
+
     override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+        Log.d("CustomWebViewClient", "shouldOverrideUrlLoading (line 23): URL: $url")
         if (url.contains("://dev.to")) {
             return false
         } else {
@@ -39,5 +47,10 @@ class CustomWebViewClient(val context: Context, val binding: ActivityMainBinding
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         context.startActivity(intent)
         return true
+    }
+
+    override fun onUnhandledKeyEvent(view: WebView?, event: KeyEvent?) {
+        Log.d("CustomWebViewClient", "shouldOverrideKeyEvent (line 24): Key event: $event.keyCode" )
+        super.onUnhandledKeyEvent(view, event)
     }
 }
