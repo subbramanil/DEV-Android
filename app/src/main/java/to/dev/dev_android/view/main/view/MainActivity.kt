@@ -41,10 +41,13 @@ class MainActivity : BaseActivity<ActivityMainBinding>(), CustomWebChromeClient.
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun setWebViewSettings() {
-        binding.webView.settings.javaScriptEnabled = true
-        binding.webView.settings.domStorageEnabled = true
         binding.webView.webViewClient = CustomWebViewClient(this@MainActivity, binding)
         binding.webView.webChromeClient = CustomWebChromeClient(this@MainActivity, binding, this)
+        binding.webView.settings.javaScriptEnabled = true
+        binding.webView.settings.domStorageEnabled = true
+        binding.webView.settings.setSupportZoom(true)
+        binding.webView.settings.builtInZoomControls = true
+        binding.webView.settings.displayZoomControls = false
     }
 
     private fun navigateToHome() {
